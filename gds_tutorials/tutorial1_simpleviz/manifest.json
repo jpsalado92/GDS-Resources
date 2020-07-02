@@ -1,0 +1,21 @@
+{
+  "name": "Community Visualization",
+  "logoUrl": "https://raw.githubusercontent.com/googledatastudio/community-visualizations/master/docs/codelab/img/bar_chart.png",
+  "organization": "Data Studio Codelab",
+  "supportUrl": "https://url",
+  "packageUrl": "https://url",
+  "privacyPolicyUrl": "https://url",
+  "description": "Community Visualization Codelab",
+  "devMode": true,
+  "components": [{
+    "id": "barChart",
+    "name": "Bar Chart",
+    "iconUrl": "https://raw.githubusercontent.com/googledatastudio/community-visualizations/master/docs/codelab/img/bar_chart.png",
+    "description": "Bar chart written in d3.js",
+    "resource": {
+      "js": "gs://gds_myviz/myViz.js",
+      "config": "gs://gds_myviz/myViz.json",
+      "css": "gs://gds_myviz/myViz.css"
+    }
+  }]
+}

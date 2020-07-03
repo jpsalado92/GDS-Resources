@@ -4,7 +4,7 @@ Codelab url: https://codelabs.developers.google.com/codelabs/community-visualiza
 
 ## Contents
 * How a Google Data Studio community visualization works
-* How to build a community visualization using the ds-component helper library
+* How to build a very simple community visualization using the ds-component helper library
 * How to integrate your community visualization into a Data Studio dashboard
 What you'll need
 
@@ -15,8 +15,8 @@ What you'll need
 * Familiarity with Javascript
 
 ## Project
-Creating a bar chart community visualization that supports 1 dimension, 1 metric, and bar color style. </br>
-![Remove one one](1.gif)
+Creating a simple community visualization that supports 1 dimension and 1 metric. </br>
+![Simple Viz](simple_viz.png)
 
 ### 1. File schema
 To create a community visualization, you need the following files in a Google Cloud Platform storage bucket, which you will create in a later step.

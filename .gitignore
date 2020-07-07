@@ -1,2 +1,6 @@
 
 .idea/
+gds_tutorials/tutorial3_localdev/dsccgen-tutorial/node_modules/*
+gds_tutorials/tutorial3_localdev/dsccgen-tutorial/yarn.lock
+gds_tutorials/tutorial3_localdev/dsccgen-tutorial/webpack.config.js
+gds_tutorials/tutorial3_localdev/dsccgen-tutorial/package-lock.json

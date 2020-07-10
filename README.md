@@ -1,19 +1,10 @@
-# Google Data Studio: Developing Community Visualizations
+# Google Data Studio Resources
+Resources for building community visualizations for Google Data Studio using ``d3.js``
 
-## First steps
-### 1. Community Visualization Codelab
-Codelab url: https://codelabs.developers.google.com/codelabs/community-visualization/#0
+## Tutorials
+1. [Creating a simple visualization](gds_tutorials/tutorial1_simpleviz)
+2. [Creating a custom visualization](gds_tutorials/tutorial2_customviz)
+3. [Using dscc-gen to develop visualizations locally](gds_tutorials/tutorial3_localdev)
 
-#### Contents
-* How a Google Data Studio community visualization works
-* How to build a community visualization using the ds-component helper library
-* How to integrate your community visualization into a Data Studio dashboard
-What you'll need
-
-#### Requirements
-* Access to the internet and a web browser
-* A Google account
-* Access to a Google Cloud Platform storage bucket
-* Familiarity with Javascript
-
-#### Project
+## Visualizations
+1. [Bubble Chart](gds_vizs/bubble_chart)

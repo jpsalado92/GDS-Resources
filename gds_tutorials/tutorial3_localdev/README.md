@@ -3,16 +3,22 @@ Codelab url: https://codelabs.developers.google.com/codelabs/community-visualiza
 
 ## Contents
 * How to build a Community Visualization with dscc-gen
+
 ## Requirements
 * Familiarity with Javascript, Node.js, and the command-line
 * Codelab 1 & 2 completed
+
 ## Project: Part 1
 Create Data Studio Community Visualizations with dscc-gen.
+
 ### 1. Setup dscc-gen
-**dscc-gen** is a command-line tool that provides opinionated templates and workflows for Community Visualizations and Community Connectors. The Community Visualization template provides a working visualization and a workflow that allows you to immediately see your visualization code changes, and scripts to validate, build, and deploy your visualizations. <br/>
+**dscc-gen** is a command-line tool that provides opinionated templates and workflows for Community Visualizations and Community Connectors. The Community Visualization template provides a working visualization and a workflow that allows you to immediately see your visualization code changes, and scripts to validate, build, and deploy your visualizations.
+
 **dscc-gen** uses gsutil in deployment scripts, and npm and webpack to build Community Visualization JavaScript code.
+
 #### 1.1 Install npm & node.js
-To install npm and node.js on your local computer  follow this [link](https://www.npmjs.com/get-npm). <br/>
+To install npm and node.js on your local computer  follow this [link](https://www.npmjs.com/get-npm).
+
 To check whether you have Node.js installed or not, run this command in your terminal:
 ```shell script
 node -v
@@ -27,12 +33,13 @@ If Google's CLI is already installed, first make a project `dsccgen-tutorial` wi
 ```shell script
 gcloud projects create dsccgen-tutorial
 ```
-You must link a billing account to this project in order to create buckets inside of it (do this via google's web console)
+You must link a billing account to this project in order to create buckets inside of it (do this via google's web console).
 Then, create the bucket, in this case I will call it `mydsccgenbucket`
 ```shell script
 gsutil mb -p dsccgen-tutorial -b on -l us-east1 gs://mydsccgenbucket/
 ```
 Make sure to make permissions fine-grained through the web console!
+
 ### 2. Start a new dscc-gen Community Visualization project
 Open a terminal and run the command:
 ```shell script
@@ -55,7 +62,6 @@ cd dsccgen-tutorial and npm run start to begin working on your viz!
 ```
 > Note: You should maintain two deployments of your Community Visualization - a "dev" deployment with non-minified files and caching disabled, and a "prod" deployment with minified files and caching enabled. The "dev" deployment will load the latest files and be easier to debug, while the "prod" deployment will load faster.
 
-
 ### 3. Preview your visualization locally
 cd to your working directory and preview the visualization with the following command:
 ```shell script
@@ -66,7 +72,9 @@ npm run start
 ### 6. dscc-gen workflow
 You will edit the files in ``src/`` - specifically, ``index.js``, ``index.json``, and ``index.css`` - to write your visualization, just as in the previous tutorials.
 
-The files in ``dist/`` allow you to preview your visualization locally in a browser. ``webpack.config.js`` is used for running the visualization locally.<br/> README.md provides an overview of the template files and commands.
+The files in ``dist/`` allow you to preview your visualization locally in a browser. ``webpack.config.js`` is used for running the visualization locally.
+
+README.md provides an overview of the template files and commands.
 
 **localMessage.js**: This file refers to the mock-data the visualization will load. You should download sample data reflective of the visualization you want to build.
 > Note: The const "message" in this file refers to the information that ds-component passes as a parameter to the callback function you register in the code.
@@ -75,11 +83,13 @@ Once everything looks fine locally, you can build and upload your visualizations
 
 ## Project: Part 2
 Build a custom visualization locally: [Bubble diagram](https://www.d3-graph-gallery.com/graph/bubble_basic.html)
+
 ### 1. Install d3
 First, install d3 at the same directory in which dsccgen was placed.
 ```shell script
 npm install d3
 ```
+
 ### 2. Understand dimensions and metrics
 Every report in Analytics is made up of dimensions and metrics.
 
@@ -270,6 +280,7 @@ Note that, if everything went correctly, a preview of this chart should appear i
 ![viz](viz.PNG)
 
 ### 5. Prod deployment
+
 #### 5.1 Update manifest (optional)
 Your visualization manifest contains metadata about your visualization, as well as the location of your visualization JavaScript, config, and CSS.
 
@@ -345,7 +356,7 @@ Just add this to the js:
 ```
 
 
-### 6. Prod deployments
+### 7. Prod deployments
 
 Once you're happy with your visualization, make sure const LOCAL in ``src/index.js`` is false, then run.
 
@@ -358,12 +369,11 @@ This will deploy your files to your "prod" GCS bucket location. Additionally, ca
 
 Just like before, the location of your deployment will be printed in the console. Use this "manifest path" to load your "prod" visualization in a Data Studio report.
 
-Congratulations! You've just built your first Community Visualization with the dscc-gen tool.
-
+> NOTE: Because of the caching, if you upload prod changes again they won't be ready until 12h have passed since the last effective prod deployment.
 
 
 ## References
-1. [Create a Data Studio community visualization using D3](https://www.youtube.com/watch?v=7axX1R_ttOI) <br>
+1. [Create a Data Studio community visualization using D3](https://www.youtube.com/watch?v=7axX1R_ttOI)
 2. [Write your visualizations faster with dscc-gen](https://developers.google.com/datastudio/visualization/local-dev)
 
 

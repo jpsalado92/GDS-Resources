@@ -1,13 +1,14 @@
-
 # Community Visualization Codelab 2
 Codelab url: https://codelabs.developers.google.com/codelabs/community-visualization/#11
 
 ## Contents
 * How to add style to a graph
 * How to select a custom plot type
+
 ## Requirements
 * Same ones as in Codelab 1
 * Codelab 1 completed
+
 ## Project
 Creating a bar chart community visualization that supports 1 dimension, 1 metric, bar color style and opacity. </br>
 ![Simple Viz](1.gif)
@@ -47,12 +48,23 @@ function drawViz(data) {
 // subscribe to data and style changes
 dscc.subscribeToData(drawViz, { transform: dscc.objectTransform });
 ```
-Create the combined JavaScript file, and re-upload your visualization files to Google Cloud Storage. Then, refresh the Data Studio report where you tested your community visualization. <br/>
-You should be able to change the color of the rectangle using the selector in the style menu.<br/>
+
+Create the combined JavaScript file, and re-upload your visualization files to Google Cloud Storage. Then, refresh the Data Studio report where you tested your community visualization.
+
+You should be able to change the color of the rectangle using the selector in the style menu.
+
 ![2](2.gif)
 
 ### 2. Render the data as a bar chart
 Replace the code in your ``myVizSource.js`` file with the code below.
+
+This adds the following:
+1. Padding for the graph.
+2. Defined the constraints for the bars to be rendered through ``maxBarHeight`` and ``barWidth``.
+3. Defined the ``largestMetric`` for scaling purposes.
+4. "Plugged" the data from metrics and styles in ``myViz.json`` to the rendering.
+5. Rendered the bars according to the source data in a loop.
+6. Placed a label containing the title of the dimension below each bar.
 ```js
 function drawViz(data) {
   let rowData = data.tables.DEFAULT;
@@ -134,17 +146,10 @@ function drawViz(data) {
 dscc.subscribeToData(drawViz, { transform: dscc.objectTransform });
 ```
 
-Here, we have added the following:
-
-1. Padding for the graph.
-2. Defined the constraints for the bars to be rendered through ``maxBarHeight`` and ``barWidth``.
-3. Defined the ``largestMetric`` for scaling purposes.
-4. "Plugged" the data from metrics and styles in ``myViz.json`` to the rendering.
-5. Rendered the bars according to the source data in a loop.
-6. Placed a label containing the title of the dimension below each bar.
-
 ### 3. Dynamically add a title and apply a CSS style
-Replace the code in your ``myVizSource.js`` file with the code below.
+
+Replace the code in your ``myVizSource.js`` file with the code below. This will add a title to show the name of the metric and the dimension.
+
 ```js
 // create a title element
 var titleElement = document.createElement('div');
@@ -239,11 +244,11 @@ function drawViz(data) {
 dscc.subscribeToData(drawViz, { transform: dscc.objectTransform });
 ```
 
-Here, we just added a title to show the name of the metric and the dimension.
-
 ### 4. Add opacity to the bars
 According to the [Community Visualization Config Reference](https://developers.google.com/datastudio/visualization/config-reference#dataelement), we can include a new style element in ``myViz.json`` to display opacity.
 In order to do so, we must use the "OPACITY" selector attached to the element list of the style dictionary, just as follows:
+
+myViz.json
 ```json
 {
   "style": [
@@ -264,12 +269,17 @@ In order to do so, we must use the "OPACITY" selector attached to the element li
 ```
 
 Also, once the selector is added, we must make our js script catch those values.
+
+myViz.js
 ```js
     const fillOpacity = data.style.barOpacity.value
         ? data.style.barOpacity.value
         : data.style.barOpacity.defaultValue;
+
+[...]
 ```
 ```js
+[...]
         let rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         rect.setAttribute("x", barX);
         rect.setAttribute("y", maxBarHeight - barHeight);

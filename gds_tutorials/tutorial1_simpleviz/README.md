@@ -10,12 +10,12 @@ What you'll need
 
 ## Requirements
 * Access to the internet and a web browser
-* A Google account
-* Access to a Google Cloud Platform storage bucket
+* Access to a Google Cloud Platform storage bucket through a configured Google Cloud CLI
 * Familiarity with Javascript
 
 ## Project
 Creating a simple community visualization that supports 1 dimension and 1 metric. </br>
+
 ![Simple Viz](simple_viz.png)
 
 ### 1. File schema
@@ -31,7 +31,7 @@ To create a community visualization, you need the following files in a Google Cl
 
 ### 2. Write the visualization JavaScript file
 In this section, you'll add the code required to handle data, style changes, and visualization rendering into your JavaScript file. 
-#### 2.1 Write the visualization source <br>
+#### 2.1 Write the visualization source
 **Step 1:** Download the dscc.min.js file from the [Data Studio Community Component Library](https://raw.githubusercontent.com/googledatastudio/tooling/master/packages/ds-component/_bundles/dscc.min.js) and copy it to your working directory.
 
 **Step 2:** Copy the following code into a text editor and save it as `myVizSource.js` in your local working directory.
@@ -68,10 +68,11 @@ function drawViz(data) {
 dscc.subscribeToData(drawViz, { transform: dscc.objectTransform });
 ```
 #### 2.2 Concatenate code
-Combine all JavaScript required into a single file by copying the contents of the visualization helper library (`dscc.min.js`) and your `myVizSource.js` file into a new file named `myViz.js`. Run the following commands to concatenate the files.<br>
+Combine all JavaScript required into a single file by copying the contents of the visualization helper library (`dscc.min.js`) and your `myVizSource.js` file into a new file named `myViz.js`. Run the following commands to concatenate the files.
+
 **IMPORTANT NOTE: Repeat this step each time you update your visualization code.**
 
-**Linux/Mac OS concatenation script**
+**Linux/Mac OS script ``concatenate.sh``**
 ```shell script
 cat dscc.min.js > myViz.js
 echo >> myViz.js
@@ -147,23 +148,29 @@ myViz.json
 }
 ````
 ### 5. Set up a storage bucket in Google Cloud
-
 The files must be accessible from a Google Storage Bucket in order to integrate them to Google Data Studio.
+
 #### 5.1 Create a project
 Access your Google Cloud and create a new project, we will call this one ``gdstutorial1``
+
 #### 5.2 Create a bucket
-At the "Storage" tab, we will create a bucket ``gds_myviz``.<br>
-* Location:  **Region**, *us-east1*.<br>
-* Default storage class: Standard storage.<br>
-* Access to levels: Fine grained.<br>
-* Advanced settings: Leave as they are<br>
+At the "Storage" tab, we will create a bucket ``gds_myviz``.
+
+* Location:  **Region**, *us-east1*.
+* Default storage class: Standard storage.
+* Access to levels: Fine grained.
+* Advanced settings: Leave as they are.
 
 ### 6. Write the manifest.json file
 
 The manifest file provides information about your visualization location and resources.
-It must be named "``manifest.json``", and it must be located in the bucket created in the previous step (``gds_myviz``).<br>
-To learn more about the manifest, visit the [manifest reference documentation](https://developers.google.com/datastudio/visualization/manifest-reference).<br>
-Copy the following code into a text editor and save it as ``manifest.json``.<br>
+
+It must be named "``manifest.json``", and it must be located in the bucket created in the previous step (``gds_myviz``).
+
+To learn more about the manifest, visit the [manifest reference documentation](https://developers.google.com/datastudio/visualization/manifest-reference).
+ 
+Copy the following code into a text editor and save it as ``manifest.json``.
+> Remember to use the bucket name you chose instead of the one I did!
 
 manifest.json
 ```json
@@ -189,20 +196,22 @@ manifest.json
   }]
 }
 ```
-### 7.Upload your visualization files to Google Cloud Storage
+### 7. Upload your visualization files to Google Cloud Storage
 You can either upload the files using the web interface or the CLI.
 >In any case, you must make sure they have **public access**
 
 #### Uploading using the CLI
-cd to the folder in which the files are and use the following commnds:
+Set the folder in which the files are as workind directory and use the following commands, they will upload all the files to the bucket granting them public access:
 ````shell script
 gsutil cp -a public-read manifest.json gs://gds_myviz
 gsutil cp -a public-read myViz.* gs://gds_myviz
 ````
 
-### 8.Test your Community Visualization in Data Studio
+### 8. Test your Community Visualization in Data Studio
 Create a new Google Data Studio report with a barplot-friendly data source (Google Sheets connector is the simplest option).
-Include the bucket link as follows ``gs://gds_myviz`` </br>
+
+Include the bucket link ``gs://gds_myviz`` as follows
+
 ![sample_image_1](gds_viz1.jpg)
 
 

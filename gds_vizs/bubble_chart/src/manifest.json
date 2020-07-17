@@ -1,0 +1,25 @@
+{
+  "name": "Bubble Chart",
+  "organization": "JPS",
+  "description": "Bubble chart",
+  "logoUrl": "https://live.staticflickr.com/3546/3348447675_2955cd7a81.jpg",
+  "organizationUrl": "",
+  "supportUrl": "",
+  "privacyPolicyUrl": "",
+  "termsOfServiceUrl": "",
+  "packageUrl": "",
+  "devMode": "DEVMODE_BOOL",
+  "components": [
+    {
+      "id": "Bubble Chart",
+      "name": "Bubble Chart",
+      "description": "My first Community Visualization",
+      "iconUrl": "https://storage.googleapis.com/community-visualizations-codelabs/table/table_icon.png",
+      "resource": {
+        "js": "gs://orkestra_gds_vizs/bubble_chart/dev/index.js",
+        "config": "gs://orkestra_gds_vizs/bubble_chart/dev/index.json",
+        "css": "gs://orkestra_gds_vizs/bubble_chart/dev/index.css"
+      }
+    }
+  ]
+}

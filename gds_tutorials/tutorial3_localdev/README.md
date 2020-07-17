@@ -1,15 +1,32 @@
 # Community Visualization Codelab 3
-Codelab url: https://codelabs.developers.google.com/codelabs/community-visualization-dscc-gen/index.html?index=..%2F..index#0
+**Creating Data Studio Community Visualizations locally with dscc-gen.**
 
-## Contents
-* How to build a Community Visualization with dscc-gen
+Based on [Google's Data Studio Codelab](https://codelabs.developers.google.com/codelabs/community-visualization-dscc-gen/index.html?index=..%2F..index#0) 
 
 ## Requirements
 * Familiarity with Javascript, Node.js, and the command-line
 * Codelab 1 & 2 completed
 
-## Project: Part 1
-Create Data Studio Community Visualizations with dscc-gen.
+## Table of contents
+* [1. Setup dscc gen](#1.-Setup-dscc-gen)
+    * [1.1 Install npm & node.js](#1.1-Install-npm-&-node.js)
+    * [1.2 Set up a Google Storage Bucket](#1.2-Set-up-a-Google-Storage-Bucket)
+* [2. Start a new dscc gen Community Visualization project](#2.-Start-a-new-dscc-gen-Community-Visualization-project)
+* [3. Preview your visualization locally](#3.-Preview-your-visualization-locally)
+* [4. dscc gen workflow](#4.-dscc-gen-workflow)
+* [5. Install d3](#5.-Install-d3)
+* [6. Understand dimensions and metrics](#6.-Understand-dimensions-and-metrics)
+* [7. Update your locally stored data with ``localMessage.js``](#7.-Update-your-locally-stored-data-with-localMessage.js)
+    * [7.1 Reformat index.json](#7.1-Reformat-index.json)
+    * [7.2 Deploy local message](#7.2-Deploy-local-message)
+    * [7.3 Get data in a new ``localMessage.js``](#7.3-Get-data-in-a-new-localMessage.js)
+* [8. Write JavaScript for a bubble chart](#8.-Write-JavaScript-for-a-bubble-chart)
+* [9. Dev deployment](#9.-Dev-deployment)
+    * [9.1 Update manifest (optional)](#9.1-Update-manifest-(optional))
+    * [9.2 Deploy your Viz!](#9.2-Deploy-your-Viz!)
+* [10. Adding labels for each circle](#10.-Adding-labels-for-each-circle)
+* [11. Prod deployments](#11.-Prod-deployments)
+* [References](#References)
 
 ### 1. Setup dscc-gen
 **dscc-gen** is a command-line tool that provides opinionated templates and workflows for Community Visualizations and Community Connectors. The Community Visualization template provides a working visualization and a workflow that allows you to immediately see your visualization code changes, and scripts to validate, build, and deploy your visualizations.
@@ -69,7 +86,7 @@ npm run start
 ```
 ![1](dscc-gen_1.PNG)
 
-### 6. dscc-gen workflow
+### 4. dscc-gen workflow
 You will edit the files in ``src/`` - specifically, ``index.js``, ``index.json``, and ``index.css`` - to write your visualization, just as in the previous tutorials.
 
 The files in ``dist/`` allow you to preview your visualization locally in a browser. ``webpack.config.js`` is used for running the visualization locally.
@@ -81,16 +98,15 @@ README.md provides an overview of the template files and commands.
 
 Once everything looks fine locally, you can build and upload your visualizations to either ``dev`` or ``prod`` and start using it in your report.
 
-## Project: Part 2
 Build a custom visualization locally: [Bubble diagram](https://www.d3-graph-gallery.com/graph/bubble_basic.html)
 
-### 1. Install d3
+### 5. Install d3
 First, install d3 at the same directory in which dsccgen was placed.
 ```shell script
 npm install d3
 ```
 
-### 2. Understand dimensions and metrics
+### 6. Understand dimensions and metrics
 Every report in Analytics is made up of dimensions and metrics.
 
 **Dimensions** are attributes of your data. For example, the dimension City indicates the city, for example, "Paris" or "New York", from which a session originates. The dimension Page indicates the URL of a page that is viewed.
@@ -108,11 +124,11 @@ Then, dimensions will arrange in the following manner:
     3. The avg score for previous exams [BubbleSize]
 
 
-### 3. Update your locally stored data with ``localMessage.js``
+### 7. Update your locally stored data with ``localMessage.js``
 So, we need to declare one dimension and three different metrics. The problem now is, how to structure the data in a way
 that dscc-gen understands it to render it locally.
 
-#### 3.1 Reformat index.json
+#### 7.1 Reformat index.json
 We must prepare ``index.json``, which represents the dimension and metrics that will be configurable in the control panel at data studio.
 
 Remember that:
@@ -167,7 +183,7 @@ Remember that:
   ]
 }
 ```
-#### 3.2 Deploy local message
+#### 7.2 Deploy local message
 Run the following command in order to deploy our actual configuration to a Storage Bucket in Google Cloud.
 
 ```shell script
@@ -179,7 +195,7 @@ npm run update_message
 This will place a visualization that just prints outs data in our buckets ``/dev`` folder.
 
  
-#### 3.3 Get data in a new ``localMessage.js``
+#### 7.3 Get data in a new ``localMessage.js``
 First, be sure we have our data prepared in a google sheet just like in the picture:
 
 ![bubble_data](bubble_data.PNG)
@@ -194,7 +210,7 @@ By doing this, we will be able to arrange data and retrieve an updated local mes
 
 Just make sure to copy the contents of the previous viz to ``localMessage.js``
 
-### 4. Write JavaScript for a bubble chart
+### 8. Write JavaScript for a bubble chart
 Based on data from localMessage.js we will create this new chart placing the code below in ``index.js``.
 
 ```js
@@ -279,9 +295,9 @@ Note that, if everything went correctly, a preview of this chart should appear i
 
 ![viz](viz.PNG)
 
-### 5. Prod deployment
+### 9. Dev deployments
 
-#### 5.1 Update manifest (optional)
+#### 9.1 Update manifest (optional)
 Your visualization manifest contains metadata about your visualization, as well as the location of your visualization JavaScript, config, and CSS.
 
 Update the values in your manifest - they will be used to provide the end user information about your visualization.
@@ -319,7 +335,8 @@ Edit src/manifest.json to describe your visualization. A sample manifest is belo
   ]
 }
 ```
-#### 5.2 Viz deployment
+
+#### 9.2 Deploy your Viz!
 
 In ``src/index.js``, change const LOCAL to "false".
 
@@ -337,7 +354,7 @@ The ``push:dev`` command uploads your visualization resources to the "dev" bucke
 
 Refresh the Data Studio report. You should see a bubble chart.
 
-### 6. Adding labels for each circle
+### 10. Adding labels for each circle
 We want to add the name of each student to every label.
 > Remember to  change const LOCAL to "true".
 
@@ -356,7 +373,7 @@ Just add this to the js:
 ```
 
 
-### 7. Prod deployments
+### 11. Prod deployments
 
 Once you're happy with your visualization, make sure const LOCAL in ``src/index.js`` is false, then run.
 

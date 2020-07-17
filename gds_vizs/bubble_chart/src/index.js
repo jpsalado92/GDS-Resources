@@ -2,7 +2,7 @@ const d3 = require('d3');
 const dscc = require('@google/dscc');
 const local = require('./localMessage.js');
 
-export const LOCAL = true;
+export const LOCAL = false;
 
 const drawViz = (message) => {
   const margin = {left: 100, right: 100, top: 100, bottom: 100};
@@ -82,6 +82,14 @@ const drawViz = (message) => {
           .duration(200)
             .style("opacity", 0)
     }
+  const bubble_color = message.style.bubble_color.value.color
+      ? message.style.bubble_color.value.color
+      : message.style.bubble_color.defaultValue;
+
+  const bubble_opacity = message.style.bubble_opacity.value
+      ? message.style.bubble_opacity.value
+      : message.style.bubble_opacity.defaultValue;
+
   // add dots
   svg.append("g")
       .selectAll("dot")
@@ -93,12 +101,11 @@ const drawViz = (message) => {
         .attr("cy", function (d) { return yScale(d.yMetric); } )
         .attr("r", function (d) { return zScale(d.sizeMetric); } )
         .style("stroke", "black")
-        .style("opacity", "0.7")
-        .style("fill", "blue")
+        .style("opacity", bubble_opacity)
+        .style("fill", bubble_color)
         .on("mouseover", showTooltip )
         .on("mousemove", moveTooltip )
         .on("mouseleave", hideTooltip )
-        // .style("fill", function (d) { return myColor(d.continent); } )
 
   svg.append("g")
       .selectAll("text")

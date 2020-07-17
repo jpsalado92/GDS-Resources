@@ -62,7 +62,7 @@ export const message = {
   "fields": {
     "dimension": [
       {
-        "id": "qt_rccgy1f79b",
+        "id": "qt_4elfhqi89b",
         "name": "student_name",
         "type": "TEXT",
         "concept": "DIMENSION"
@@ -70,7 +70,7 @@ export const message = {
     ],
     "xMetric": [
       {
-        "id": "qt_nfbpa2f79b",
+        "id": "qt_3jvsmxi89b",
         "name": "study_time",
         "type": "NUMBER",
         "concept": "METRIC"
@@ -78,7 +78,7 @@ export const message = {
     ],
     "yMetric": [
       {
-        "id": "qt_mbh3c2f79b",
+        "id": "qt_ubhxoxi89b",
         "name": "score",
         "type": "NUMBER",
         "concept": "METRIC"
@@ -86,14 +86,28 @@ export const message = {
     ],
     "sizeMetric": [
       {
-        "id": "qt_bxiye2f79b",
+        "id": "qt_02y7ixi89b",
         "name": "avg_score_previous_exams",
         "type": "NUMBER",
         "concept": "METRIC"
       }
     ]
   },
-  "style": {},
+  "style": {
+    "bubble_color": {
+      "value": {
+        "color": "#FF8F00",
+        "opacity": 1
+      },
+      "defaultValue": {
+        "color": "#222222"
+      }
+    },
+    "bubble_opacity": {
+      "value": 0.6,
+      "defaultValue": 0.2
+    }
+  },
   "theme": {
     "themeFillColor": {
       "color": "#ffffff",

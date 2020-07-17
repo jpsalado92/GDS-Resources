@@ -53,7 +53,7 @@ const drawViz = (message) => {
     // -1- Create a tooltip div that is hidden by default:
   const tooltip = d3.select("body")
       .append("div")
-        .style("opacity", 1)
+        .style("opacity", 0)
         .attr("class", "tooltip")
         .style("position", "absolute")
         .style("background-color", "black")

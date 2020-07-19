@@ -2,7 +2,7 @@ const d3 = require('d3');
 const dscc = require('@google/dscc');
 const local = require('./localMessage.js');
 
-export const LOCAL = false;
+export const LOCAL = true;
 
 const drawViz = (message) => {
   const margin = {left: 100, right: 100, top: 100, bottom: 100};
@@ -49,6 +49,34 @@ const drawViz = (message) => {
   svg.append("g")
       .call(d3.axisLeft(yScale));
 
+  // gridlines in x axis function
+  function make_x_gridlines() {
+    return d3.axisBottom(xScale)
+        .ticks(2)
+  }
+
+// gridlines in y axis function
+  function make_y_gridlines() {
+    return d3.axisLeft(yScale)
+        .ticks(2)
+  }
+
+  // add the X gridlines
+  svg.append("g")
+      .attr("class", "grid")
+      .attr("transform", "translate(0," + chartHeight + ")")
+      .call(make_x_gridlines()
+          .tickSize(-chartHeight)
+          .tickFormat("")
+      )
+
+  // add the Y gridlines
+  svg.append("g")
+      .attr("class", "grid")
+      .call(make_y_gridlines()
+          .tickSize(-chartWidth)
+          .tickFormat("")
+      )
   // Add tooltip
     // -1- Create a tooltip div that is hidden by default:
   const tooltip = d3.select("body")

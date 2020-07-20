@@ -151,6 +151,49 @@ const drawViz = (message) => {
         .attr("text-anchor", "middle")
         .text(function (d) { return d.mainDimension; });
 
+// LEGEND
+  const legend_svg = svg.append("legend_svg")
+      .attr("width", 460)
+      .attr("height", 460)
+
+// Add legend: circles
+  const valuesToShow = [1, 5, 10]
+  const xCircle = xScale(8)
+  const yCircle = yScale(0.5)
+  const xLabel = xScale(9)
+
+  svg.selectAll("legend")
+      .data(valuesToShow)
+      .enter()
+      .append("circle")
+      .attr("cx", xCircle)
+      .attr("cy", function(d){ return yCircle - zScale(d) } )
+      .attr("r", function(d){ return zScale(d) })
+      .style("fill", "none")
+      .attr("stroke", "black")
+
+// Add legend: segments
+  svg.selectAll("legend")
+      .data(valuesToShow)
+      .enter()
+      .append("line")
+      .attr('x1', function(d){ return xCircle + zScale(d) } )
+      .attr('x2', xLabel)
+      .attr('y1', function(d){ return yCircle - zScale(d) } )
+      .attr('y2', function(d){ return yCircle - zScale(d) } )
+      .attr('stroke', 'black')
+      .style('stroke-dasharray', ('2,2'))
+
+// Add legend: labels
+  svg.selectAll("legend")
+      .data(valuesToShow)
+      .enter()
+      .append("text")
+      .attr('x', xLabel)
+      .attr('y', function(d){ return yCircle - zScale(d) } )
+      .text( function(d){ return d } )
+      .style("font-size", 10)
+      .attr('alignment-baseline', 'middle')
 };
 
 // renders locally

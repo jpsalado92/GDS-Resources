@@ -2,11 +2,14 @@ export const message = {
   "tables": {
     "DEFAULT": [
       {
-        "dimension": [
+        "mainDimension": [
           "Pablo"
         ],
+        "colorDimension": [
+          "Bilbao"
+        ],
         "xMetric": [
-          20
+          10
         ],
         "yMetric": [
           8
@@ -16,11 +19,31 @@ export const message = {
         ]
       },
       {
-        "dimension": [
-          "Eva"
+        "mainDimension": [
+          "Adrian"
+        ],
+        "colorDimension": [
+          "Eibar"
         ],
         "xMetric": [
-          15
+          9
+        ],
+        "yMetric": [
+          5
+        ],
+        "sizeMetric": [
+          8
+        ]
+      },
+      {
+        "mainDimension": [
+          "Eva"
+        ],
+        "colorDimension": [
+          "Bilbao"
+        ],
+        "xMetric": [
+          8
         ],
         "yMetric": [
           10
@@ -30,8 +53,28 @@ export const message = {
         ]
       },
       {
-        "dimension": [
+        "mainDimension": [
+          "Rahm"
+        ],
+        "colorDimension": [
+          "Donosti"
+        ],
+        "xMetric": [
+          7
+        ],
+        "yMetric": [
+          8
+        ],
+        "sizeMetric": [
+          2
+        ]
+      },
+      {
+        "mainDimension": [
           "Julian"
+        ],
+        "colorDimension": [
+          "Durango"
         ],
         "xMetric": [
           5
@@ -44,8 +87,28 @@ export const message = {
         ]
       },
       {
-        "dimension": [
+        "mainDimension": [
+          "Jon"
+        ],
+        "colorDimension": [
+          "Vitoria"
+        ],
+        "xMetric": [
+          5
+        ],
+        "yMetric": [
+          4
+        ],
+        "sizeMetric": [
+          5
+        ]
+      },
+      {
+        "mainDimension": [
           "Romero"
+        ],
+        "colorDimension": [
+          "Durango"
         ],
         "xMetric": [
           3
@@ -60,7 +123,7 @@ export const message = {
     ]
   },
   "fields": {
-    "dimension": [
+    "mainDimension": [
       {
         "id": "qt_4elfhqi89b",
         "name": "student_name",
@@ -91,16 +154,24 @@ export const message = {
         "type": "NUMBER",
         "concept": "METRIC"
       }
+    ],
+    "colorDimension": [
+      {
+        "id": "qt_mgjop9rlac",
+        "name": "origin",
+        "type": "TEXT",
+        "concept": "DIMENSION"
+      }
     ]
   },
   "style": {
     "bubble_color": {
       "value": {
-        "color": "#FF8F00",
+        "color": "#00ACC1",
         "opacity": 1
       },
       "defaultValue": {
-        "color": "#222222"
+        "color": "#0000ff"
       }
     },
     "bubble_opacity": {

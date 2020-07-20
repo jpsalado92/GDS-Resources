@@ -5,8 +5,8 @@
       "label": "Concepts",
       "elements": [
         {
-          "id": "dimension",
-          "label": "Dimensions",
+          "id": "mainDimension",
+          "label": "main",
           "type": "DIMENSION",
           "options": {
             "min": 1,
@@ -35,6 +35,15 @@
           "id": "sizeMetric",
           "label": "Size",
           "type": "METRIC",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "colorDimension",
+          "label": "Color",
+          "type": "DIMENSION",
           "options": {
             "min": 1,
             "max": 1

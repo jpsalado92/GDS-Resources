@@ -7,7 +7,7 @@ export const LOCAL = true;
 const drawViz = (message) => {
   const margin = {left: 100, right: 100, top: 100, bottom: 100};
   const height = dscc.getHeight();
-  const width = dscc.getWidth();
+  const width = height;
   const chartHeight = height - margin.top - margin.bottom;
   const chartWidth = width - margin.left - margin.right;
 
@@ -27,7 +27,7 @@ const drawViz = (message) => {
 
   // Add a scale for X
   const xScale = d3.scaleLinear()
-      .domain([0, 20])
+      .domain([0, 10])
       .range([0, chartWidth]);
 
   // Add a scale for Y
@@ -52,13 +52,13 @@ const drawViz = (message) => {
   // gridlines in x axis function
   function make_x_gridlines() {
     return d3.axisBottom(xScale)
-        .ticks(2)
+        .ticks(10)
   }
 
 // gridlines in y axis function
   function make_y_gridlines() {
     return d3.axisLeft(yScale)
-        .ticks(2)
+        .ticks(10)
   }
 
   // add the X gridlines
@@ -77,6 +77,13 @@ const drawViz = (message) => {
           .tickSize(-chartWidth)
           .tickFormat("")
       )
+
+  // Add a scale for bubble color
+  var myColor = d3.scaleOrdinal()
+      // .domain(message.fields['xMetric'][0].name)
+      // .domain(["Bilbao", "Durango", "Eibar", "Vitoria", "Donosti"])
+      .range(["f94144", "f3722c", "f9c74f", "90be6d"]);
+
   // Add tooltip
     // -1- Create a tooltip div that is hidden by default:
   const tooltip = d3.select("body")
@@ -95,7 +102,9 @@ const drawViz = (message) => {
             .duration(200)
         tooltip
             .style("opacity", 1)
-            .html("TooltipX: " + d.xMetric + "<br />TooltipY: " + d.yMetric)
+            .html(message.fields['xMetric'][0].name + ": " + d.xMetric + "<br />" +
+                  message.fields['yMetric'][0].name + ": " + d.yMetric + "<br />" +
+                  message.fields['sizeMetric'][0].name + ": " + d.yMetric + "<br />")
             .style("left", d3.event.pageX+30 + "px")
             .style("top", d3.event.pageY+30 + "px")
     }
@@ -130,7 +139,7 @@ const drawViz = (message) => {
         .attr("r", function (d) { return zScale(d.sizeMetric); } )
         .style("stroke", "black")
         .style("opacity", bubble_opacity)
-        .style("fill", bubble_color)
+        .style("fill", function (d) { return myColor(d.colorDimension); } )
         .on("mouseover", showTooltip )
         .on("mousemove", moveTooltip )
         .on("mouseleave", hideTooltip )
@@ -141,9 +150,9 @@ const drawViz = (message) => {
       .enter()
       .append("text")
         .attr("x", function (d) {return xScale(d.xMetric); })
-        .attr("y", function (d) { return yScale(d.yMetric); })
+        .attr("y", function (d) {return yScale(d.yMetric); })
         .attr("text-anchor", "middle")
-        .text(function (d) { return d.dimension; });
+        .text(function (d) { return d.mainDimension; });
 };
 
 // renders locally

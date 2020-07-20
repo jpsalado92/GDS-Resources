@@ -54,20 +54,6 @@
   ],
   "style": [
     {
-      "id": "color",
-      "label": "MyColor",
-      "elements": [
-        {
-          "type": "FILL_COLOR",
-          "id": "bubble_color",
-          "label": "Color",
-          "defaultValue": {
-            "color": "#0000ff"
-          }
-        }
-      ]
-    },
-    {
       "id": "opacity",
       "label": "MyOpacity",
       "elements": [

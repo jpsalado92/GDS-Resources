@@ -119,9 +119,6 @@ const drawViz = (message) => {
           .duration(200)
             .style("opacity", 0)
     }
-  const bubble_color = message.style.bubble_color.value.color
-      ? message.style.bubble_color.value.color
-      : message.style.bubble_color.defaultValue;
 
   const bubble_opacity = message.style.bubble_opacity.value
       ? message.style.bubble_opacity.value
@@ -153,6 +150,7 @@ const drawViz = (message) => {
         .attr("y", function (d) {return yScale(d.yMetric); })
         .attr("text-anchor", "middle")
         .text(function (d) { return d.mainDimension; });
+
 };
 
 // renders locally

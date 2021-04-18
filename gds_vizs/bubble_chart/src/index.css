@@ -11,8 +11,9 @@ code {
 }
 
 .bubbles {
-  stroke-width: 2px;
+  stroke-width: 0.1px;
   stroke: white;
+  opacity:
 }
 .bubbles:hover {
   stroke: black;
@@ -26,4 +27,12 @@ code {
 
 .grid path {
   stroke-width: 0;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+  stroke-width: 0px;
 }

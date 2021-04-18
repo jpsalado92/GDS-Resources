@@ -5,10 +5,10 @@ const local = require('./localMessage.js');
 export const LOCAL = true;
 
 const drawViz = (message) => {
-  const margin = {left: 100, right: 100, top: 100, bottom: 100};
+  const margin = {left: 75, right: 50, top: 50, bottom: 75};
   const height = dscc.getHeight();
-  const width = height;
-  const chartHeight = height - margin.top - margin.bottom;
+  const width = dscc.getHeight();
+  const chartHeight = height -25 - margin.top - margin.bottom;
   const chartWidth = width - margin.left - margin.right;
 
   // remove existing svgs
@@ -25,40 +25,43 @@ const drawViz = (message) => {
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 
+  const square_length = 4
+
   // Add a scale for X
   const xScale = d3.scaleLinear()
-      .domain([0, 10])
+      .domain([0, square_length])
       .range([0, chartWidth]);
 
   // Add a scale for Y
   const yScale = d3.scaleLinear()
-      .domain([0, 10])
+      .domain([0, square_length])
       .range([chartHeight, 0]);
 
   // Add a scale for bubble size
-  const zScale = d3.scaleLinear()
-      .domain([0, 10])
-      .range([1, 50]);
+  var zScale = d3.scaleLinear()
+      //.domain([0, d3.max(message.tables.DEFAULT.map(function(d) { return d.sizeMetric; }))])
+      .domain([0, 10000])
+      .range([0, 0.08 * chartWidth]);
 
   // Add X axis
   svg.append("g")
       .attr("transform", "translate(0," + chartHeight + ")")
-      .call(d3.axisBottom(xScale));
+      .attr("class", "axis")
+      .call(d3.axisBottom(xScale).ticks(2))
 
   // Add Y axis
   svg.append("g")
-      .call(d3.axisLeft(yScale));
+      .attr("class", "axis")
+      .call(d3.axisLeft(yScale).ticks(2));
 
   // gridlines in x axis function
   function make_x_gridlines() {
     return d3.axisBottom(xScale)
-        .ticks(10)
   }
 
-// gridlines in y axis function
+  // gridlines in y axis function
   function make_y_gridlines() {
     return d3.axisLeft(yScale)
-        .ticks(10)
   }
 
   // add the X gridlines
@@ -79,10 +82,10 @@ const drawViz = (message) => {
       )
 
   // Add a scale for bubble color
-  var myColor = d3.scaleOrdinal()
+  const myColor = d3.scaleOrdinal()
       // .domain(message.fields['xMetric'][0].name)
       // .domain(["Bilbao", "Durango", "Eibar", "Vitoria", "Donosti"])
-      .range(["f94144", "f3722c", "f9c74f", "90be6d"]);
+      .range(["FF0B0B", "FF850B", "FFFF0B", "85FF0B"]);
 
   // Add tooltip
     // -1- Create a tooltip div that is hidden by default:
@@ -124,7 +127,35 @@ const drawViz = (message) => {
       ? message.style.bubble_opacity.value
       : message.style.bubble_opacity.defaultValue;
 
-  // add dots
+
+  // Vertical half line
+  svg.append('line')
+      .attr('x1', xScale(square_length / 2 ))
+      .attr('y1', yScale(0) )
+      .attr('x2', xScale(square_length / 2 ))
+      .attr('y2', yScale(square_length ))
+      .attr('stroke', 'black')
+      .attr('stroke-width', 0.5)
+
+  // Horizontal half line
+  svg.append('line')
+      .attr('y1', yScale(square_length / 2 ))
+      .attr('x1', xScale(0) )
+      .attr('y2', yScale(square_length / 2 ))
+      .attr('x2', xScale(square_length ))
+      .attr('stroke', 'black')
+      .attr('stroke-width', 0.5)
+
+  // 4th Quadrant
+  svg.append('rect')
+      .attr('x', xScale(square_length)/2)
+      .attr('y', yScale(square_length)/2)
+      .attr('height', yScale(square_length/2))
+      .attr('width', xScale(square_length/2))
+      .attr('fill', '#ff0000')
+      .attr("opacity", 0.2)
+
+  // DATA
   svg.append("g")
       .selectAll("dot")
       .data(message.tables.DEFAULT)
@@ -133,8 +164,7 @@ const drawViz = (message) => {
         .attr("class", "bubbles")
         .attr("cx", function (d) { return xScale(d.xMetric); } )
         .attr("cy", function (d) { return yScale(d.yMetric); } )
-        .attr("r", function (d) { return zScale(d.sizeMetric); } )
-        .style("stroke", "black")
+        .attr("r", function (d) { if (true) return zScale(d.sizeMetric[1]); } )
         .style("opacity", bubble_opacity)
         .style("fill", function (d) { return myColor(d.colorDimension); } )
         .on("mouseover", showTooltip )
@@ -151,49 +181,48 @@ const drawViz = (message) => {
         .attr("text-anchor", "middle")
         .text(function (d) { return d.mainDimension; });
 
-// LEGEND
-  const legend_svg = svg.append("legend_svg")
-      .attr("width", 460)
-      .attr("height", 460)
+  // LEGEND
+  const legendData = d3.nest()
+      .key(function(d) { return d.colorDimension})
+      .entries(message.tables.DEFAULT)
 
-// Add legend: circles
-  const valuesToShow = [1, 5, 10]
-  const xCircle = xScale(8)
-  const yCircle = yScale(0.5)
-  const xLabel = xScale(9)
-
-  svg.selectAll("legend")
-      .data(valuesToShow)
+  svg.selectAll("mydots")
+      .data(legendData)
       .enter()
       .append("circle")
-      .attr("cx", xCircle)
-      .attr("cy", function(d){ return yCircle - zScale(d) } )
-      .attr("r", function(d){ return zScale(d) })
-      .style("fill", "none")
-      .attr("stroke", "black")
+      .attr("cy", yScale(-0.2))
+      .attr("cx", function(d,i){ return xScale(0.2 + i)})
+      .attr("r", 4)
+      .style("fill", function(d,i){ return myColor(i)})
 
-// Add legend: segments
-  svg.selectAll("legend")
-      .data(valuesToShow)
-      .enter()
-      .append("line")
-      .attr('x1', function(d){ return xCircle + zScale(d) } )
-      .attr('x2', xLabel)
-      .attr('y1', function(d){ return yCircle - zScale(d) } )
-      .attr('y2', function(d){ return yCircle - zScale(d) } )
-      .attr('stroke', 'black')
-      .style('stroke-dasharray', ('2,2'))
-
-// Add legend: labels
-  svg.selectAll("legend")
-      .data(valuesToShow)
+  svg.selectAll("mylabels")
+      .data(legendData)
       .enter()
       .append("text")
-      .attr('x', xLabel)
-      .attr('y', function(d){ return yCircle - zScale(d) } )
-      .text( function(d){ return d } )
-      .style("font-size", 10)
-      .attr('alignment-baseline', 'middle')
+      .attr("y", yScale(-0.2))
+      .attr("x", function(d,i){ return xScale(0.3 + i)}) // 100 is where the first dot appears. 25 is the distance between dots
+      .text(function(d){ return d.key})
+      .attr("text-anchor", "left")
+      .style("alignment-baseline", "middle")
+
+  // HEADERS
+  svg.append("text")
+      .text("TITULO GENERAL")
+      .attr("x", xScale(square_length / 2))
+      .attr("y", yScale(0.1 + square_length))
+      .attr("text-anchor", "middle")
+
+  svg.append("text")
+      .text("TITULO Y")
+      .attr("text-anchor", "middle")
+      .attr("transform", 'translate( '+xScale(-0.2)+' , '+yScale(2)+'),'+ 'rotate(-90)')
+
+  svg.append("text")
+      .text("TITULO X")
+      .attr("x", xScale(square_length / 2))
+      .attr("y", yScale(- 0.4))
+      .attr("text-anchor", "middle")
+
 };
 
 // renders locally

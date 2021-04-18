@@ -8,3 +8,7 @@ gds_vizs/bubble_chart/node_modules/*
 gds_vizs/bubble_chart/build/*
 gds_vizs/bubble_chart/dist/*
 gds_vizs/bubble_chart/webpack.config.js
+gds_vizs/chord_diagram/node_modules/*
+gds_vizs/chord_diagram/build/*
+gds_vizs/chord_diagram/dist/*
+gds_vizs/chord_diagram/webpack.config.js
